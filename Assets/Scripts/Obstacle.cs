@@ -4,6 +4,7 @@ public class Obstacle : MonoBehaviour
 {
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        print("Você bateu, perdeu otário!");
+        GameManager.Instance.GameOver();
+        print("VocÃª bateu, perdeu otÃ¡rio!");
     }
 }
