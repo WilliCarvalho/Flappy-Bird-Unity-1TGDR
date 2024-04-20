@@ -2,17 +2,19 @@ using UnityEngine;
 
 public class PipeBehavior : MonoBehaviour
 {
+    private AudioSource audioSource;
+
     public float velocity;
     public float minPositionX = -4.3f;
     public float spawnPositionX = 4.3f;
     public float minPositionY = -1.78f;
     public float maxPositionY = 2.47f;
 
-    private int points;
+    private int score;
 
-    private void Start()
+    private void Awake()
     {
-        //TODO: Setar altura aleatória do cano    
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -20,9 +22,9 @@ public class PipeBehavior : MonoBehaviour
         //Vector2.Left == new Vector2 (-1, 0) - Se move para esquerda em 1 unidade
         transform.Translate(Vector2.left * velocity * Time.deltaTime);
 
-        if(transform.position.x < minPositionX)
+        if (transform.position.x < minPositionX)
         {
-            Vector2 newPosition = 
+            Vector2 newPosition =
                 new Vector2(spawnPositionX, SetRandomYPosition());
             transform.position = newPosition;
         }
@@ -35,7 +37,8 @@ public class PipeBehavior : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        points++;
-        print("Ganhe um pontinho mizeravi!! Seus pontos: " + points);
+        audioSource.Play();
+        score++;
+        GameBehavior.gameBehavior.UpdateScoreUI(score);        
     }
 }
