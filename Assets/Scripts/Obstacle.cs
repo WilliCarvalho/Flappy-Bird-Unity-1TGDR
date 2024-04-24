@@ -11,7 +11,10 @@ public class Obstacle : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        audiosource.Play();
-       GameBehavior.gameBehavior.GameOver();
-    }    
+        if (GameBehavior.gameBehavior.gameOver == false)
+        {
+            audiosource.Play();
+            GameBehavior.gameBehavior.GameOver();
+        }
+    }
 }

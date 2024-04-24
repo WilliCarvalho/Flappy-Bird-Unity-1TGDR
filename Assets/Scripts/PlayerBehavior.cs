@@ -10,10 +10,10 @@ public class PlayerBehavior : MonoBehaviour
     public float jumpForce;
     private bool canFly;
 
-
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody2D>();
+        rigidbody.gravityScale = 0;
         audioSource = GetComponent<AudioSource>();
         canFly = true;
     }
@@ -22,6 +22,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (Input.GetButtonDown("Fire1") && canFly)
         {
+            rigidbody.gravityScale = 1;
             audioSource.clip = audioclips[0];
             audioSource.Play();
             rigidbody.AddForce(new Vector2(0, jumpForce));
@@ -31,8 +32,11 @@ public class PlayerBehavior : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Faz o player parar de se mover e toca som
-        audioSource.clip = audioclips[1];
-        audioSource.Play();
-        canFly = false;
+        if (GameBehavior.gameBehavior.gameOver == false)
+        {
+            audioSource.clip = audioclips[1];
+            audioSource.Play();
+            canFly = false;
+        }
     }
 }
